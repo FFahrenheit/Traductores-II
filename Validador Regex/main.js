@@ -1,4 +1,5 @@
 const mainContent = document.getElementById('main');
+const clearButton = document.getElementById('clear');
 
 const validators = [
     {
@@ -86,22 +87,25 @@ const validators = [
             const value = e.target.value;
             const isValid = validator.regex.test(value);
 
-            console.table([
-                {
-                    'Campo': validator.shortName,
-                    'Valor': value,
-                    'Regex': validator.regex, 
-                    'Válido': isValid
-                }
-            ]);
+            console.table([{
+                'Campo': validator.shortName,
+                'Valor': value,
+                'Regex': validator.regex, 
+                'Válido': isValid    
+            }]);
 
-            if (isValid) {
-                currentControl.classList.add('is-valid');
-                currentControl.classList.remove('is-invalid');
-            } else {
-                currentControl.classList.add('is-invalid');
-                currentControl.classList.remove('is-valid');
-            }
+            currentControl.classList.add(isValid ? 'is-valid' : 'is-invalid');
+            currentControl.classList.remove(isValid ? 'is-invalid' : 'is-valid');    
         });
     });
 })();
+
+clearButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    validators.forEach(validator => {
+        const currentControl = document.getElementById(validator.id);
+        currentControl.value = '';
+        currentControl.classList.remove('is-valid');
+        currentControl.classList.remove('is-invalid');        
+    });
+});
