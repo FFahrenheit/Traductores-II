@@ -2,7 +2,7 @@ from ply import lex, yacc
 
 errors = []
 
-# Tokens
+# Definición de tokens
 tokens = (
     'IDENTIFIER',
     'NUMBER',
@@ -16,7 +16,7 @@ tokens = (
     'SEMICOLON'
 )
 
-# Regex for tokens
+# Expresiones regulares para tokens
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -28,39 +28,43 @@ t_SEMICOLON = r';'
 
 t_ignore = ' \t'
 
-# Identifier rule
+# Regla para el token de identificador
 def t_IDENTIFIER(t):
     r'[a-zA-Z][a-zA-Z0-9_]*'
     return t
 
-# Number rule
+# Regla para el token de número
 def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
     return t
 
-# Lexical error handler
+# Manejo de errores léxicos
 def t_error(t):
     global errors
-    errors.append(f"Caracter ilegal '{t.value[0]}'")
+    errors.append(f"Error léxico en línea {t.lineno}: Caracter ilegal '{t.value[0]}'")
     t.lexer.skip(1)
 
 # Regla para rastrear el número de línea
 def t_newline(t):
     r'\n+'
-    print(len(t.value))
     t.lexer.lineno += len(t.value)
 
-
-# Lexical analyzer
+# Construcción del analizador léxico
 lexer = lex.lex()
 
-# Precedence rules
+# Reglas de precedencia
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
 )
-# Program rules
+
+# Regla de la gramática para la asignación
+def p_assignment(p):
+    '''assignment : IDENTIFIER EQUALS expression SEMICOLON'''
+    p[0] = ('assignment', p[1], p[3])
+
+# Regla de la gramática para el programa
 def p_program(p):
     '''program : assignment
                | assignment program'''
@@ -69,12 +73,7 @@ def p_program(p):
     else:
         p[0] = ('program', p[1], p[2])
 
-# Assignment rule
-def p_assignment(p):
-    'assignment : IDENTIFIER EQUALS expression SEMICOLON'
-    p[0] = ('assignment', p[1], p[3])
-
-# Expression rule 
+# Regla de la gramática para las expresiones
 def p_expression_binop(p):
     '''expression : expression PLUS expression
                   | expression MINUS expression
@@ -94,25 +93,33 @@ def p_expression_identifier(p):
     'expression : IDENTIFIER'
     p[0] = ('identifier', p[1])
 
-# Syntax error hanlder
+# Manejo de errores sintácticos
 def p_error(p):
-    global errors
     if p:
-        errors.append(f"Sintaxis error en '{p.value}' en la línea {p.lineno}")
+        errors.append(f"Error sintáctico en línea {p.lineno}: '{p.value}'")
     else:
-        errors.append("Error de sintaxis al final de la entrada")
+        errors.append("Error sintáctico: EOF inesperado")
 
-# Syntax analyzer
+# Construcción del analizador sintáctico
 parser = yacc.yacc()
 
 # Función para analizar la entrada
 def parse_input(input_string):
-    lexer = lex.lex()
-    parser = yacc.yacc()
     global errors
     errors.clear()
     return parser.parse(input_string)
 
-def get_errors():
-    global errors
-    return errors
+if __name__ == "__main__":
+    while True:
+        try:
+            lexer = lex.lex()
+            parser = yacc.yacc()
+            s = input('Ingrese la sentencia a analizar: ')
+            s = 'x=1+2;\ny=1+2;\nx=3+2;\n'
+        except EOFError:
+            break
+        if not s:
+            continue
+        result = parse_input(s)
+        print(result)
+        print(errors)

@@ -52,8 +52,10 @@ class Ui_MainWindow(object):
 
         self.output_text = QPlainTextEdit(self.groupBox)
         self.output_text.setObjectName(u"output_text")
-        self.output_text.setEnabled(False)
+        self.output_text.setEnabled(True)
         self.output_text.setFont(font)
+        self.output_text.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.output_text.setReadOnly(True)
 
         self.gridLayout_2.addWidget(self.output_text, 0, 1, 1, 1)
 
@@ -79,6 +81,10 @@ class Ui_MainWindow(object):
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Analizador sint\u00e1ctico", None))
         self.clear_button.setText(QCoreApplication.translate("MainWindow", u"Limpiar", None))
         self.run_button.setText(QCoreApplication.translate("MainWindow", u"Analizar", None))
+        self.input_text.setPlainText(QCoreApplication.translate("MainWindow", u"suma = 1 + 2;\n"
+"resta = 1 - 2;\n"
+"multiplicacion = 3 * 4;\n"
+"resultado = suma + multiplicacion;", None))
         self.output_text.setPlainText(QCoreApplication.translate("MainWindow", u"<Esperando an\u00e1lisis>", None))
     # retranslateUi
 

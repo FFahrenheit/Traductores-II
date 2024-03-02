@@ -53,12 +53,18 @@ resultado = suma + multiplicacion;</string>
        <item row="0" column="1">
         <widget class="QPlainTextEdit" name="output_text">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="font">
           <font>
            <family>Consolas</family>
           </font>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAsNeeded</enum>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
          <property name="plainText">
           <string>&lt;Esperando análisis&gt;</string>
