@@ -42,6 +42,12 @@
            <family>Consolas</family>
           </font>
          </property>
+         <property name="plainText">
+          <string>suma = 1 + 2;
+resta = 1 - 2;
+multiplicacion = 3 * 4;
+resultado = suma + multiplicacion;</string>
+         </property>
         </widget>
        </item>
        <item row="0" column="1">

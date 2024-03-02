@@ -7,7 +7,7 @@ if __name__ == '__main__':
     app = QApplication()
     # Crear ventana
     window = MainWindow()
-    window.setWindowTitle("Red Neuronal Multicapa - Algoritmo de retropropagación")
+    window.setWindowTitle("Analizador sintáctico")
     # Se hace visible
     window.show()
     # Qt loop

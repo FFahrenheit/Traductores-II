@@ -2,6 +2,7 @@
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import Slot
 from ui_mainwindow import Ui_MainWindow
+from syntax import parse_input, get_errors
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -13,7 +14,14 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def start_analysis(self):
-        print(self.ui.input_text.toPlainText())
+        code = self.ui.input_text.toPlainText()
+        result = parse_input(code)
+        if result is None:
+            errors = get_errors()
+            print(errors)
+            return
+        
+        self.ui.output_text.setPlainText(str(result))
 
     @Slot()
     def clear_input(self):
