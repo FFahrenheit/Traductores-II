@@ -19,12 +19,11 @@ class MainWindow(QMainWindow):
         self.ui.output_text.clear()
         code = self.ui.input_text.toPlainText()
         result = parse_input(code)
-        
+        errors = get_errors()
         cursor = self.ui.output_text.textCursor()
         format = cursor.charFormat()
 
-        if result is None:
-            errors = get_errors()
+        if len(errors) > 0:
             format.setForeground(QColor(255, 0, 0))
             cursor.setCharFormat(format)
             cursor.insertText("ERROR:\n")
