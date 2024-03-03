@@ -2,6 +2,9 @@ from ply import lex, yacc
 
 errors = []
 
+'''
+    Tokens and rules for lexical analyzer 
+'''
 # Tokens
 tokens = (
     'IDENTIFIER',
@@ -45,21 +48,20 @@ def t_error(t):
     errors.append(f"Caracter ilegal '{t.value[0]}'")
     t.lexer.skip(1)
 
-# Regla para rastrear el número de línea
+# Newline rule (track line number)
 def t_newline(t):
     r'\n+'
-    print(len(t.value))
     t.lexer.lineno += len(t.value)
-
-
-# Lexical analyzer
-lexer = lex.lex()
 
 # Precedence rules
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
 )
+
+'''
+    Syntax analyzer rules 
+'''
 # Program rules
 def p_program(p):
     '''program : assignment
@@ -102,17 +104,17 @@ def p_error(p):
     else:
         errors.append("Error de sintaxis al final de la entrada")
 
-# Syntax analyzer
-parser = yacc.yacc()
-
-# Función para analizar la entrada
+# Export function to parse input
 def parse_input(input_string):
+    # Lexical analyzer
     lexer = lex.lex()
+    # Syntax analyzer
     parser = yacc.yacc()
     global errors
     errors.clear()
     return parser.parse(input_string)
 
+# Export function to get errors during analysis
 def get_errors():
     global errors
     return errors

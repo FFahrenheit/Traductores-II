@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
-    <height>404</height>
+    <width>810</width>
+    <height>465</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,21 +21,21 @@
        <string>Analizador sintáctico</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="1">
+       <item row="2" column="1">
         <widget class="QPushButton" name="clear_button">
          <property name="text">
           <string>Limpiar</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QPushButton" name="run_button">
          <property name="text">
           <string>Analizar</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QPlainTextEdit" name="input_text">
          <property name="font">
           <font>
@@ -50,7 +50,7 @@ resultado = suma + multiplicacion;</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="1">
         <widget class="QPlainTextEdit" name="output_text">
          <property name="enabled">
           <bool>true</bool>
@@ -67,7 +67,37 @@ resultado = suma + multiplicacion;</string>
           <bool>true</bool>
          </property>
          <property name="plainText">
-          <string>&lt;Esperando análisis&gt;</string>
+          <string>&lt;Esperando análisis...&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <family>Consolas</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>Código</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <family>Consolas</family>
+          </font>
+         </property>
+         <property name="text">
+          <string>Salida</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -81,7 +111,7 @@ resultado = suma + multiplicacion;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>700</width>
+     <width>810</width>
      <height>22</height>
     </rect>
    </property>
