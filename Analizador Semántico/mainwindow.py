@@ -1,5 +1,5 @@
 #  C:/Python39/Lib/site-packages/PySide6/uic mainwindow.ui > ui_mainwindow.py -g python
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QMessageBox, QFileDialog
 from PySide6.QtCore import Slot
 from PySide6.QtGui import QColor
 from ui_mainwindow import Ui_MainWindow
@@ -13,6 +13,33 @@ class MainWindow(QMainWindow):
 
         self.ui.run_button.clicked.connect(self.start_analysis)
         self.ui.clear_button.clicked.connect(self.clear_input)
+
+        self.ui.actionAbrir.triggered.connect(self.open_file)
+        self.ui.actionGuardar.triggered.connect(self.save_file)
+
+    @Slot()
+    def save_file(self):
+        path = QFileDialog.getSaveFileName(
+            self,
+            'Guardar archivo',
+            './examples',
+            'Text Files (*.txt)'
+        )[0]
+
+        with open(path, 'w') as file:
+            file.write(self.ui.input_text.toPlainText())
+
+    @Slot()
+    def open_file(self):
+        path = QFileDialog.getOpenFileName(
+            self,
+            "Abrir archivo",
+            "./examples",
+            "Text Files (*.txt);;All Files (*)"
+        )[0]
+
+        with open(path, 'r') as file:
+            self.ui.input_text.setPlainText(file.read())
 
     @Slot()
     def start_analysis(self):
@@ -58,3 +85,6 @@ class MainWindow(QMainWindow):
         else:
             result += '  ' * (indent + 1) + f'{node}\n'
         return result
+    
+    def print_error(self, title, message):
+        QMessageBox.critical(self, title, message)

@@ -11,19 +11,24 @@
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
+    QCursor, QFont, QFontDatabase, QGradient,
+    QIcon, QImage, QKeySequence, QLinearGradient,
+    QPainter, QPalette, QPixmap, QRadialGradient,
+    QTransform)
 from PySide6.QtWidgets import (QApplication, QGridLayout, QGroupBox, QLabel,
-    QMainWindow, QMenuBar, QPlainTextEdit, QPushButton,
-    QSizePolicy, QStatusBar, QWidget)
+    QMainWindow, QMenu, QMenuBar, QPlainTextEdit,
+    QPushButton, QSizePolicy, QStatusBar, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(810, 465)
+        self.actionAbrir = QAction(MainWindow)
+        self.actionAbrir.setObjectName(u"actionAbrir")
+        self.actionGuardar = QAction(MainWindow)
+        self.actionGuardar.setObjectName(u"actionGuardar")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout_3 = QGridLayout(self.centralwidget)
@@ -80,10 +85,16 @@ class Ui_MainWindow(object):
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 810, 22))
+        self.menuArchivo = QMenu(self.menubar)
+        self.menuArchivo.setObjectName(u"menuArchivo")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
+        self.menubar.addAction(self.menuArchivo.menuAction())
+        self.menuArchivo.addAction(self.actionAbrir)
+        self.menuArchivo.addAction(self.actionGuardar)
 
         self.retranslateUi(MainWindow)
 
@@ -92,7 +103,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Analizador sint\u00e1ctico", None))
+        self.actionAbrir.setText(QCoreApplication.translate("MainWindow", u"Abrir", None))
+        self.actionGuardar.setText(QCoreApplication.translate("MainWindow", u"Guardar", None))
+        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Analizador sem\u00e1ntico", None))
         self.clear_button.setText(QCoreApplication.translate("MainWindow", u"Limpiar", None))
         self.run_button.setText(QCoreApplication.translate("MainWindow", u"Analizar", None))
         self.input_text.setPlainText(QCoreApplication.translate("MainWindow", u"suma = 1 + 2;\n"
@@ -102,5 +115,6 @@ class Ui_MainWindow(object):
         self.output_text.setPlainText(QCoreApplication.translate("MainWindow", u"<Esperando an\u00e1lisis...>", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"C\u00f3digo", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Salida", None))
+        self.menuArchivo.setTitle(QCoreApplication.translate("MainWindow", u"Archivo", None))
     # retranslateUi
 

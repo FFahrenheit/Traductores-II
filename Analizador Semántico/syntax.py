@@ -1,6 +1,7 @@
 from ply import lex, yacc
 
 errors = []
+symbol_table = {}
 
 '''
     Tokens and rules for lexical analyzer 
@@ -45,7 +46,7 @@ def t_NUMBER(t):
 # Lexical error handler
 def t_error(t):
     global errors
-    errors.append(f"Caracter ilegal '{t.value[0]}'")
+    errors.append(f"[Línea {t.lineno}] Error léxico: Caracter ilegal '{t.value[0]}'")
     t.lexer.skip(1)
 
 # Newline rule (track line number)
@@ -74,6 +75,11 @@ def p_program(p):
 # Assignment rule
 def p_assignment(p):
     'assignment : IDENTIFIER EQUALS expression SEMICOLON'
+    # Check if variable is already defined
+    if p[1] in symbol_table:
+        errors.append(f"[Línea {p.lineno(1)}] Error semántico: Variable '{p[1]}' ya está definida")
+        return 
+    symbol_table[p[1]] = p[3]
     p[0] = ('assignment', p[1], p[3])
 
 # Expression rule 
@@ -94,13 +100,18 @@ def p_expression_number(p):
 
 def p_expression_identifier(p):
     'expression : IDENTIFIER'
+    global errors
+    # Check if variable is not defined
+    if p[1] not in symbol_table:
+        errors.append(f"[Línea {p.lineno(1)}] Error semántico: Variable '{p[1]}' no está definida")
+        return
     p[0] = ('identifier', p[1])
 
-# Syntax error hanlder
+# Syntax error handler
 def p_error(p):
     global errors
     if p:
-        errors.append(f"Sintaxis error en '{p.value}' en la línea {p.lineno}")
+        errors.append(f"[Línea {p.lineno}] Error de sintaxis en '{p.value}'")
     else:
         errors.append("Error de sintaxis al final de la entrada")
 
@@ -110,7 +121,8 @@ def parse_input(input_string):
     lexer = lex.lex()
     # Syntax analyzer
     parser = yacc.yacc()
-    global errors
+    global errors, symbol_table
+    symbol_table = {}
     errors.clear()
     return parser.parse(input_string)
 
