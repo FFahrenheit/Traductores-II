@@ -130,3 +130,8 @@ def parse_input(input_string):
 def get_errors():
     global errors
     return errors
+
+# Export function to get symbol table after analysis
+def get_symbol_table():
+    global symbol_table
+    return symbol_table
