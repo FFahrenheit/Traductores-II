@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <!-- Metadata -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Título e ícono -->
+        <link rel="shortcout icon" type="image/x-icon" href="https://static-00.iconduck.com/assets.00/binary-tree-icon-488x512-80synq7f.png">
+        <title>
+            Validador de palabras reservadas
+        </title>
+        <!-- Estilos -->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        >
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://kit.fontawesome.com/a5af5be790.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="h-100 container-fluid text-center bg-light">
+            <h1 class="pt-3">
+                Validador de palabras reservadas
+            </h1>
+            <br>
+            <!-- Entrada a validar -->
+            <div class="row justify-content-center">
+                <div class="col-md-4 justify-content-center">
+                    <div class="form-group justify-content-center ">
+                        <label for="tree_input">Palabra a validar</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="tree_input"
+                            placeholder="Palabra a validar"
+                        >
+                        <button class="btn btn-success mt-3" id="run_button">
+                            Validar
+                        </button>
+                    </div>
+                    <div>
+                        <h4>Palabras reservadas</h4>
+                        <canvas id="tree_canvas" width="500" height="400"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <h4>Árbol validador</h4>
+                    <canvas id="input_canvas" width="1000" height="700"></canvas>
+                </div>
+            </div>
+            <!-- Footer -->
+            <div style="height: 30px;"></div>
+            <footer class="footer page-footer">
+                <div class="container text-center">
+                    <a class="text-light link-footer" href="https://github.com/FFahrenheit" target="_blank">
+                        Made with
+                        <i class="fas fa-heart mx-1 text-danger"></i>
+                        by FFahrenheit
+                    </a>
+                </div>
+            </footer>
+        </div>
+        <!-- Scripts -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="BinaryTree.js"></script>    
+        <script src="main.js"></script>
+    </body>
+</html>
