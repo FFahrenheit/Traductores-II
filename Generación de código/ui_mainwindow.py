@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(917, 465)
+        MainWindow.resize(917, 647)
         self.actionAbrir = QAction(MainWindow)
         self.actionAbrir.setObjectName(u"actionAbrir")
         self.actionGuardar = QAction(MainWindow)
@@ -38,43 +38,15 @@ class Ui_MainWindow(object):
         self.groupBox.setObjectName(u"groupBox")
         self.gridLayout = QGridLayout(self.groupBox)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.label = QLabel(self.groupBox)
-        self.label.setObjectName(u"label")
-        font = QFont()
-        font.setFamilies([u"Consolas"])
-        self.label.setFont(font)
-        self.label.setAlignment(Qt.AlignCenter)
+        self.clear_button = QPushButton(self.groupBox)
+        self.clear_button.setObjectName(u"clear_button")
 
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.clear_button, 4, 1, 1, 1)
 
-        self.label_2 = QLabel(self.groupBox)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setFont(font)
-        self.label_2.setAlignment(Qt.AlignCenter)
+        self.run_button = QPushButton(self.groupBox)
+        self.run_button.setObjectName(u"run_button")
 
-        self.gridLayout.addWidget(self.label_2, 0, 1, 1, 1)
-
-        self.label_3 = QLabel(self.groupBox)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setFont(font)
-        self.label_3.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout.addWidget(self.label_3, 0, 2, 1, 1)
-
-        self.input_text = QPlainTextEdit(self.groupBox)
-        self.input_text.setObjectName(u"input_text")
-        self.input_text.setFont(font)
-
-        self.gridLayout.addWidget(self.input_text, 1, 0, 1, 1)
-
-        self.output_text = QPlainTextEdit(self.groupBox)
-        self.output_text.setObjectName(u"output_text")
-        self.output_text.setEnabled(True)
-        self.output_text.setFont(font)
-        self.output_text.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.output_text.setReadOnly(True)
-
-        self.gridLayout.addWidget(self.output_text, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.run_button, 4, 0, 1, 1)
 
         self.symbol_table = QTableWidget(self.groupBox)
         if (self.symbol_table.columnCount() < 2):
@@ -86,17 +58,58 @@ class Ui_MainWindow(object):
         self.symbol_table.setObjectName(u"symbol_table")
         self.symbol_table.setEnabled(False)
 
-        self.gridLayout.addWidget(self.symbol_table, 1, 2, 1, 1)
+        self.gridLayout.addWidget(self.symbol_table, 3, 0, 1, 1)
 
-        self.run_button = QPushButton(self.groupBox)
-        self.run_button.setObjectName(u"run_button")
+        self.label = QLabel(self.groupBox)
+        self.label.setObjectName(u"label")
+        font = QFont()
+        font.setFamilies([u"Consolas"])
+        self.label.setFont(font)
+        self.label.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.run_button, 2, 0, 1, 1)
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
 
-        self.clear_button = QPushButton(self.groupBox)
-        self.clear_button.setObjectName(u"clear_button")
+        self.label_3 = QLabel(self.groupBox)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setFont(font)
+        self.label_3.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.clear_button, 2, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_3, 2, 0, 1, 1)
+
+        self.asm_text = QPlainTextEdit(self.groupBox)
+        self.asm_text.setObjectName(u"asm_text")
+        self.asm_text.setFont(font)
+
+        self.gridLayout.addWidget(self.asm_text, 3, 1, 1, 1)
+
+        self.label_4 = QLabel(self.groupBox)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setFont(font)
+        self.label_4.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.label_4, 2, 1, 1, 1)
+
+        self.input_text = QPlainTextEdit(self.groupBox)
+        self.input_text.setObjectName(u"input_text")
+        self.input_text.setFont(font)
+
+        self.gridLayout.addWidget(self.input_text, 1, 0, 1, 2)
+
+        self.label_2 = QLabel(self.groupBox)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setFont(font)
+        self.label_2.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.label_2, 0, 2, 1, 1)
+
+        self.output_text = QPlainTextEdit(self.groupBox)
+        self.output_text.setObjectName(u"output_text")
+        self.output_text.setEnabled(True)
+        self.output_text.setFont(font)
+        self.output_text.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.output_text.setReadOnly(True)
+
+        self.gridLayout.addWidget(self.output_text, 1, 2, 3, 1)
 
 
         self.gridLayout_3.addWidget(self.groupBox, 0, 0, 1, 1)
@@ -125,21 +138,24 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.actionAbrir.setText(QCoreApplication.translate("MainWindow", u"Abrir", None))
         self.actionGuardar.setText(QCoreApplication.translate("MainWindow", u"Guardar", None))
-        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Analizador sem\u00e1ntico", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"C\u00f3digo", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Salida", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Tabla de s\u00edmbolos", None))
-        self.input_text.setPlainText(QCoreApplication.translate("MainWindow", u"suma = 1 + 2;\n"
-"resta = 1 - 2;\n"
-"multiplicacion = 3 * 4;\n"
-"resultado = suma + multiplicacion;", None))
-        self.output_text.setPlainText(QCoreApplication.translate("MainWindow", u"<Esperando an\u00e1lisis...>", None))
+        self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Generaci\u00f3n de c\u00f3digo", None))
+        self.clear_button.setText(QCoreApplication.translate("MainWindow", u"Limpiar", None))
+        self.run_button.setText(QCoreApplication.translate("MainWindow", u"Compilar", None))
         ___qtablewidgetitem = self.symbol_table.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"S\u00edmbolo", None));
         ___qtablewidgetitem1 = self.symbol_table.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Valor", None));
-        self.run_button.setText(QCoreApplication.translate("MainWindow", u"Analizar", None))
-        self.clear_button.setText(QCoreApplication.translate("MainWindow", u"Limpiar", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"C\u00f3digo", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Tabla de s\u00edmbolos", None))
+        self.asm_text.setPlainText(QCoreApplication.translate("MainWindow", u"<Esperando compilaci\u00f3n...>\n"
+"", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"Pseudoensamblador", None))
+        self.input_text.setPlainText(QCoreApplication.translate("MainWindow", u"suma = 1 + 2;\n"
+"resta = 1 - 2;\n"
+"multiplicacion = 3 * 4;\n"
+"resultado = suma + multiplicacion;", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Salida", None))
+        self.output_text.setPlainText(QCoreApplication.translate("MainWindow", u"<Esperando an\u00e1lisis...>", None))
         self.menuArchivo.setTitle(QCoreApplication.translate("MainWindow", u"Archivo", None))
     # retranslateUi
 
