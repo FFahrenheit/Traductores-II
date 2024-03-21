@@ -1,0 +1,5 @@
+suma = 1 + 2;
+resta = 1 - 2;
+x = resultado + 1;
+multiplicacion = 3 * 4;
+resultado = suma + multiplicacion;
