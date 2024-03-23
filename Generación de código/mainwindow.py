@@ -48,6 +48,7 @@ class MainWindow(QMainWindow):
         self.ui.output_text.clear()
         self.ui.symbol_table.clearContents()
         self.ui.symbol_table.setRowCount(0)
+        self.ui.asm_text.setPlainText('')
         code = self.ui.input_text.toPlainText()
         result = parse_input(code)
         self.errors = get_errors()
