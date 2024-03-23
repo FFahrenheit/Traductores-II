@@ -78,7 +78,12 @@ class MainWindow(QMainWindow):
         self.ui.output_text.setTextCursor(cursor)
 
         # Evaluation
+        self.asm = []
+        self.memory_address = {}
         self.symbol_table = get_symbol_table()
+        for index, key in enumerate(self.symbol_table.keys()):
+            self.memory_address[key] = hex(80 + index)
+
         self.evaluate_symbol_table(result)
         for error in self.errors:
             self.print_error("Error de ejecución", error)
@@ -87,6 +92,10 @@ class MainWindow(QMainWindow):
         for index, key in enumerate(self.symbol_table.keys()):
             self.ui.symbol_table.setItem(index, 0, QTableWidgetItem(key))
             self.ui.symbol_table.setItem(index, 1, QTableWidgetItem(str(self.symbol_table[key])))
+            self.ui.symbol_table.setItem(index, 2, QTableWidgetItem(self.memory_address[key]))
+
+        if len(self.errors) == 0:
+            self.ui.asm_text.setPlainText('\n'.join(self.asm))
 
     @Slot()
     def clear_input(self):
@@ -94,6 +103,7 @@ class MainWindow(QMainWindow):
         self.ui.output_text.setPlainText('<Esperando análisis...>')
         self.ui.symbol_table.clearContents()
         self.ui.symbol_table.setRowCount(0)
+        self.ui.asm_text.setPlainText('<Esperando compilación...>')
 
     def format_ast(self, node, indent=0):
         result = ''
@@ -115,44 +125,70 @@ class MainWindow(QMainWindow):
                 expression = node[2]
                 value = self.evaluate_tree(expression)
                 if value is not None:
-                    self.symbol_table[variable_name] = value
+                    self.asm.append(f"MOV [{self.memory_address[variable_name]}], AX")
+                    self.symbol_table[variable_name] = value[0]
                 else:
                     self.errors.append(f"Error al evaluar la expresión para la variable '{variable_name}'")
         else:
             self.errors.append(f"Error semántico: Nodo de programa inválido {node}")
     
     def evaluate_tree(self, node):
+        # Address meanings
+        # >= 0 -- Variable
+        # -1   -- Constant
+        # -2   -- Immediate result
+        # -3   -- Error
         if isinstance(node, tuple):
             if node[0] == 'number':
-                return node[1]
+                return node[1], -1
             elif node[0] == 'identifier':
                 # Verificar si la variable está definida
                 if node[1] not in self.symbol_table:
                     self.errors.append(f"Error semántico: Variable '{node[1]}' no está definida")
-                    return None
-                return self.symbol_table[node[1]]
+                    return None, -3
+                return self.symbol_table[node[1]], self.memory_address[node[1]]
             elif node[0] == 'binop':
-                left_value = self.evaluate_tree(node[2])
-                right_value = self.evaluate_tree(node[3])
+                left_value, left_address = self.evaluate_tree(node[2])
+                right_value, right_address = self.evaluate_tree(node[3])
+                
+                self.asm.extend(self.move_operations('AX', left_value, left_address))
+                self.asm.extend(self.move_operations('BX', right_value, right_address))
+
                 if left_value is None or right_value is None:
-                    return None
+                    return None, -3
                 if node[1] == '+':
-                    return left_value + right_value
+                    self.asm.append("ADD AX, BX")
+                    return (left_value + right_value), -2
                 elif node[1] == '-':
-                    return left_value - right_value
+                    self.asm.append("SUB AX, BX")
+                    return (left_value - right_value), -2
                 elif node[1] == '*':
-                    return left_value * right_value
+                    self.asm.append("MUL AX, BX")
+                    return (left_value * right_value), -2
                 elif node[1] == '/':
+                    self.asm.append("DIV AX, BX")
                     if right_value == 0:
                         self.errors.append("Error semántico: División por cero")
-                        return None
-                    return left_value / right_value
+                        return None, -2
+                    return (left_value / right_value), -2
             else:
                 self.errors.append("Error semántico: Tipo de nodo desconocido")
-                return None
+                return None, -3
         else:
             self.errors.append("Error semántico: Nodo inválido")
-            return None
+            return None, -3
 
+    def move_operations(self, target, value, address):
+        if address == -1:
+            return [f"MOV {target}, 0d{str(value).zfill(2)}"]
+        if address == -2:
+            if target == 'AX':
+                return []
+            return [f"MOV {target}, AX"]
+        if isinstance(address, str):
+            return [f"MOV {target}, [{address}]"]
+        
+        return []
+    
     def print_error(self, title, message):
         QMessageBox.critical(self, title, message)

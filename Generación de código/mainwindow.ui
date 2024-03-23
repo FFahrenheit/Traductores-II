@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>917</width>
+    <width>959</width>
     <height>647</height>
    </rect>
   </property>
@@ -48,6 +48,11 @@
          <column>
           <property name="text">
            <string>Valor</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Dirección</string>
           </property>
          </column>
         </widget>
@@ -133,7 +138,7 @@ resultado = suma + multiplicacion;</string>
           </font>
          </property>
          <property name="text">
-          <string>Salida</string>
+          <string>Árbol sintáctico</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -171,7 +176,7 @@ resultado = suma + multiplicacion;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>917</width>
+     <width>959</width>
      <height>22</height>
     </rect>
    </property>

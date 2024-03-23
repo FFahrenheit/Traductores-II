@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(917, 647)
+        MainWindow.resize(959, 647)
         self.actionAbrir = QAction(MainWindow)
         self.actionAbrir.setObjectName(u"actionAbrir")
         self.actionGuardar = QAction(MainWindow)
@@ -49,12 +49,14 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.run_button, 4, 0, 1, 1)
 
         self.symbol_table = QTableWidget(self.groupBox)
-        if (self.symbol_table.columnCount() < 2):
-            self.symbol_table.setColumnCount(2)
+        if (self.symbol_table.columnCount() < 3):
+            self.symbol_table.setColumnCount(3)
         __qtablewidgetitem = QTableWidgetItem()
         self.symbol_table.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
         self.symbol_table.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        self.symbol_table.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         self.symbol_table.setObjectName(u"symbol_table")
         self.symbol_table.setEnabled(False)
 
@@ -117,7 +119,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 917, 22))
+        self.menubar.setGeometry(QRect(0, 0, 959, 22))
         self.menuArchivo = QMenu(self.menubar)
         self.menuArchivo.setObjectName(u"menuArchivo")
         MainWindow.setMenuBar(self.menubar)
@@ -145,6 +147,8 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"S\u00edmbolo", None));
         ___qtablewidgetitem1 = self.symbol_table.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Valor", None));
+        ___qtablewidgetitem2 = self.symbol_table.horizontalHeaderItem(2)
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Direcci\u00f3n", None));
         self.label.setText(QCoreApplication.translate("MainWindow", u"C\u00f3digo", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Tabla de s\u00edmbolos", None))
         self.asm_text.setPlainText(QCoreApplication.translate("MainWindow", u"<Esperando compilaci\u00f3n...>\n"
@@ -154,7 +158,7 @@ class Ui_MainWindow(object):
 "resta = 1 - 2;\n"
 "multiplicacion = 3 * 4;\n"
 "resultado = suma + multiplicacion;", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Salida", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u00c1rbol sint\u00e1ctico", None))
         self.output_text.setPlainText(QCoreApplication.translate("MainWindow", u"<Esperando an\u00e1lisis...>", None))
         self.menuArchivo.setTitle(QCoreApplication.translate("MainWindow", u"Archivo", None))
     # retranslateUi
