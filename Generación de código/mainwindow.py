@@ -91,7 +91,7 @@ class MainWindow(QMainWindow):
         self.ui.symbol_table.setRowCount(len(self.symbol_table.keys()))
         for index, key in enumerate(self.symbol_table.keys()):
             self.ui.symbol_table.setItem(index, 0, QTableWidgetItem(key))
-            self.ui.symbol_table.setItem(index, 1, QTableWidgetItem(str(self.symbol_table[key])))
+            self.ui.symbol_table.setItem(index, 1, QTableWidgetItem(str(round(self.symbol_table[key], 4))))
             self.ui.symbol_table.setItem(index, 2, QTableWidgetItem(self.memory_address[key]))
 
         if len(self.errors) == 0:
@@ -123,10 +123,10 @@ class MainWindow(QMainWindow):
             elif node[0] == 'assignment':
                 variable_name = node[1]
                 expression = node[2]
-                value = self.evaluate_tree(expression)
+                value, address = self.evaluate_tree(expression)
                 if value is not None:
-                    self.asm.append(f"MOV [{self.memory_address[variable_name]}], AX")
-                    self.symbol_table[variable_name] = value[0]
+                    self.asm.extend(self.move_operations(f"[{self.memory_address[variable_name]}]", value, address))
+                    self.symbol_table[variable_name] = value
                 else:
                     self.errors.append(f"Error al evaluar la expresión para la variable '{variable_name}'")
         else:
@@ -188,7 +188,7 @@ class MainWindow(QMainWindow):
         if isinstance(address, str):
             return [f"MOV {target}, [{address}]"]
         
-        return []
+        return ["NOP"]
     
     def print_error(self, title, message):
         QMessageBox.critical(self, title, message)

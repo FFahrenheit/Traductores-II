@@ -154,10 +154,11 @@ class Ui_MainWindow(object):
         self.asm_text.setPlainText(QCoreApplication.translate("MainWindow", u"<Esperando compilaci\u00f3n...>\n"
 "", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Pseudoensamblador", None))
-        self.input_text.setPlainText(QCoreApplication.translate("MainWindow", u"suma = 1 + 2;\n"
+        self.input_text.setPlainText(QCoreApplication.translate("MainWindow", u"suma = 1 + 2 + 4;\n"
 "resta = 1 - 2;\n"
 "multiplicacion = 3 * 4;\n"
-"resultado = suma + multiplicacion;", None))
+"resultado = (suma + multiplicacion)*2;\n"
+"flotante = 1/3;", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u00c1rbol sint\u00e1ctico", None))
         self.output_text.setPlainText(QCoreApplication.translate("MainWindow", u"<Esperando an\u00e1lisis...>", None))
         self.menuArchivo.setTitle(QCoreApplication.translate("MainWindow", u"Archivo", None))
